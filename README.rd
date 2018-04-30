@@ -20,3 +20,10 @@ The provided [manifest.yml](manifest.yml) should do everyhting you need. Only ed
 
 ## BOSH Deploy
 `bosh -e circle-director -d circle-static deploy ./manifest.yml`
+
+#TODO
+
+1) Add nomad instance, with links
+1) break out mongo, postgres to their own job
+2) MOve shared storage to persistent disk
+1) Package services as their own jobs - https://starkandwayne.com/blog/embed-docker-into-bosh-releases/
