@@ -1,0 +1,9 @@
+---
+name: frontend
+
+templates:
+  job-lifecycle/pre-start.erb: bin/pre-start #see https://bosh.io/docs/job-lifecycle.html
+
+packages: []
+
+properties: {}

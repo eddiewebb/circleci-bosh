@@ -1,0 +1,33 @@
+---
+name: circle-static
+director_uuid: "68555f3a-c0c4-47ac-6ae6-3221704b8294"
+
+releases:
+- {name: circle-static, version: latest}
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: latest
+
+
+update:
+  canaries: 1
+  max_in_flight: 3
+  canary_watch_time: 15000-30000
+  update_watch_time: 15000-300000
+
+instance_groups:
+- name: frontend
+  instances: 1
+  vm_type: services
+  stemcell: trusty
+  azs: [z1]
+  networks:
+  - name: default #assign private IP, DNS, etc, et
+    default: [dns, gateway]
+  - name: vip #assign elastic IP
+    static_ips: [18.221.140.32]
+  jobs:
+  - name: frontend
+    release: circle-static

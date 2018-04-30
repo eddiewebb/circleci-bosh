@@ -1,0 +1,65 @@
+azs:
+- name: z1
+  cloud_properties: {availability_zone: us-east-2a}
+#- name: z2
+#  cloud_properties: {availability_zone: us-east-2b}
+
+
+# see https://bosh.io/docs/aws-cpi/#resource-pools for all aoption
+vm_types:
+- name: default
+  cloud_properties:
+    instance_type: c5.large
+    ephemeral_disk: {size: 55000, type: gp2}
+- name: services
+  cloud_properties:
+    instance_type: r4.2xlarge
+    ephemeral_disk: {size: 10000, type: gp2}
+    security_groups: [sg-67e4fb0c,eddies-_services_sg, eddies-_users_sg]
+
+- name: builders
+  disk_size: 100_000
+  cloud_properties:
+    instance_type: r4.2xlarge
+    ephemeral_disk: {size: 10000, type: gp2}
+    security_groups: [sg-67e4fb0c,eddies-_services_sg, eddies-_users_sg]
+    #iam_instance_profile: custom-iam-for-builder
+
+# only used if persistent_disk_type specified for a job
+disk_types:
+- name: small
+  disk_size: 56_000
+  cloud_properties: {type: gp2}
+- name: large
+  disk_size: 100_000
+  cloud_properties: {type: gp2}
+
+networks:
+- name: default
+  type: manual
+  subnets:
+  - range: 10.0.10.0/24
+    gateway: 10.0.10.1
+    az: z1
+    static: [10.0.10.62]
+    dns: [10.0.10.2]
+    reserved: [10.0.10.0/30]
+    cloud_properties: {subnet: subnet-b2f092da}
+  # To support multi-az services
+  #- range: 10.10.64.0/24
+  #  gateway: 10.10.64.1
+  #  az: z2
+  #  static: [10.10.64.121, 10.10.64.122]
+  #  dns: [10.0.4.2]
+  #  cloud_properties: {subnet: subnet-b2f092da}
+
+  #to support elastic IPs
+- name: vip
+  type: vip
+
+compilation:
+  workers: 1
+  reuse_compilation_vms: true
+  az: z1
+  vm_type: default
+  network: default
