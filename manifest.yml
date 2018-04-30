@@ -3,7 +3,7 @@ name: circle-static
 director_uuid: "68555f3a-c0c4-47ac-6ae6-3221704b8294"
 
 releases:
-- {name: circle-static, version: latest}
+- {name: circle-static, version: latest}  # change to github link
 
 stemcells:
 - alias: trusty
@@ -27,7 +27,7 @@ instance_groups:
   - name: default #assign private IP, DNS, etc, et
     default: [dns, gateway]
   - name: vip #assign elastic IP
-    static_ips: [18.221.140.32]
+    static_ips: [((frontend_ip))]
   jobs:
   - name: frontend
     release: circle-static
