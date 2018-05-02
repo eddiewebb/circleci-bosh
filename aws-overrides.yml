@@ -1,0 +1,4 @@
+---
+- type: replace
+  path: /director_uuid
+  value: 68555f3a-c0c4-47ac-6ae6-3221704b8294

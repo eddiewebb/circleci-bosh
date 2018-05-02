@@ -4,6 +4,8 @@ This assumes you have BOSH cli and running director, if not start with https://b
 
 # Setup
 
+
+
 ## Prerequesites
 1) You need an elastic IP (ELB/ALB can be configured alternately)
 2) You need security groups (see docs)
@@ -21,11 +23,15 @@ The provided [manifest.yml](manifest.yml) should do everyhting you need. Only ed
 ## BOSH Deploy
 `bosh -e circle-director -d circle-static deploy ./manifest.yml`
 
-#TODO
+# Modifications
 
-1) nginx wint start expecting ipv6
+## Add ELBs
+Add the elb ops file and elb-array as an argument
+`-o aws-elb.yml -v elb-array=[elb-name-1]`
+
+# TODO
+
 1) move apt-get magic to compile stage
-1) Add ELB for frontend
 1) break out mongo, postgres to their own job
 2) MOve shared storage to persistent disk
 1) Package services as their own jobs - https://starkandwayne.com/blog/embed-docker-into-bosh-releases/
