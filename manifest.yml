@@ -1,14 +1,15 @@
 ---
-name: circle-static
+name: static
 director_uuid: "68555f3a-c0c4-47ac-6ae6-3221704b8294"
 
 releases:
-- {name: circle-static, version: latest}  # change to github link
-
+- name: circle-static
+  version: latest  # change to github link
 stemcells:
 - alias: trusty
   os: ubuntu-trusty
-  version: latest
+  version: 3468.13 #important!! At some future release stemcells began blocking IPv6 which breaks default nginx config.
+  #Need to update docker images since e we dont actulally use ipv6
 
 
 update:
@@ -31,3 +32,16 @@ instance_groups:
   jobs:
   - name: frontend
     release: circle-static
+  env:
+    bosh:
+      ipv6: {enable: true}
+#- name: cluster #what we call it
+#  instances: 1
+#  vm_type: builders
+#  stemcell: trusty
+#  azs: [z1]
+#  networks:
+#  - name: default
+#  jobs:
+#  - name: nomad #name in provided release
+#    release: circle-static

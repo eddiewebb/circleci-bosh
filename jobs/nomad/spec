@@ -1,8 +1,15 @@
 ---
 name: nomad
 
-templates: {}
+templates:
+  job-lifecycle/pre-start.erb: bin/pre-start #see https://bosh.io/docs/job-lifecycle.html
+  nomad.conf.erb: config/nomad.conf
+  config.hcl.erb: config/config.hcl
 
 packages: []
 
 properties: {}
+
+consumes:
+- name: nomad_server #nomad server exists on frontend box we connect to
+  type: conn

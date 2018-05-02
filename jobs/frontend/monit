@@ -1,1 +1,5 @@
-# Fill out lifecycle control
+check process frontend
+  with pidfile /var/vcap/sys/run/frontend/pid
+  start program "/var/vcap/jobs/frontend/bin/ctl start"
+  stop program "/var/vcap/jobs/frontend/bin/ctl stop"
+  group vcap

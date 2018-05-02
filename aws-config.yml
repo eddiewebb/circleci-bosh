@@ -10,20 +10,21 @@ vm_types:
 - name: default
   cloud_properties:
     instance_type: c5.large
-    ephemeral_disk: {size: 55000, type: gp2}
+    ephemeral_disk: {size: 58000, type: gp2}
 - name: services
   cloud_properties:
-    instance_type: r4.2xlarge
-    ephemeral_disk: {size: 10000, type: gp2}
+    instance_type: m4.2xlarge
+    root_disk: {size: 58000, type: gp2}
     security_groups: ((default_security_groups))
-
+    iam_instance_profile: ((iam_instance_profile))
 - name: builders
   disk_size: 100_000
   cloud_properties:
-    instance_type: r4.2xlarge
-    ephemeral_disk: {size: 10000, type: gp2}
+    instance_type: m4.xlarge
+    root_disk: {size: 55000, type: gp2}
     security_groups: ((default_security_groups))
-    #iam_instance_profile: ((builder_iam_profile))
+    auto_assign_public_ip: true
+    iam_instance_profile: ((iam_instance_profile))
 
 # only used if persistent_disk_type specified for a job
 disk_types:

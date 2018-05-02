@@ -10,8 +10,10 @@ bosh -e circle update-cloud-config aws-config.yml \
 -v default_key_name=eddies \
 -v default_security_groups=[sg-67e4fb0c,eddies-_services_sg,eddies-_users_sg] \
 -v circle_subnet=subnet-b2f092da \
--v builder_iam_profile=profile-id-123
+-v iam_instance_profile=cci-bosh-instance-profile
 
+# for instance profile, see https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-iam-instance-profile.html#getting-started-create-iam-instance-profile-console
+# needs full access to s3 bucket named in config later.
 
 
 ## Deploy Circle CI

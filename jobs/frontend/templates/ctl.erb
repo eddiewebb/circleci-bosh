@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# we enable tracing and log everything; there's nothing to hide here.
+set -eux
+
+JOB_DIR=/var/vcap/jobs/frontend
+RUN_DIR=/var/vcap/sys/run/frontend
+LOG_DIR=/var/vcap/sys/log/frontend
+PIDFILE=${RUN_DIR}/pid
+
+mkdir -p $RUN_DIR $LOG_DIR
+exec -- \
+  >>  $LOG_DIR/frontend.stdout.log \
+  2>> $LOG_DIR/frontend.stderr.log
+
+case $1 in
+
+  start)
+    chown -R vcap:vcap $RUN_DIR $LOG_DIR
+    # this script is a fire-and-forget, but monit doesn't play that game,
+    # so we tell monit to check a pid that's always there
+    echo 1 > $PIDFILE
+
+    #but legacy replicated job takes a while....
+    bash $JOB_DIR/bin/staticInstall.sh
+
+    ;;
+
+  stop)
+    rm -f $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

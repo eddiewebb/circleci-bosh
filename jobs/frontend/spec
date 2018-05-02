@@ -2,8 +2,14 @@
 name: frontend
 
 templates:
+  ctl.erb: bin/ctl
+  staticInstall.sh.erb: bin/staticInstall.sh
   job-lifecycle/pre-start.erb: bin/pre-start #see https://bosh.io/docs/job-lifecycle.html
 
 packages: []
 
 properties: {}
+
+provides:
+- name: nomad_server #nomad server exists on frontend box we connect to
+  type: conn

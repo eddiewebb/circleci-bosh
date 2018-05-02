@@ -7,7 +7,7 @@ This assumes you have BOSH cli and running director, if not start with https://b
 ## Prerequesites
 1) You need an elastic IP (ELB/ALB can be configured alternately)
 2) You need security groups (see docs)
-3) Optional: IAM Profile for builder images
+3) IAM Profile for ec2 instances - see [customer/s3-policy.json] as example policy and [aws guide](https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-iam-instance-profile.html#getting-started-create-iam-instance-profile-console)
 4) Not yet supported:  AMI images for machine/remote docker (use replicated)
 
 ## Provide your Cloud Config
@@ -23,7 +23,9 @@ The provided [manifest.yml](manifest.yml) should do everyhting you need. Only ed
 
 #TODO
 
-1) Add nomad instance, with links
+1) nginx wint start expecting ipv6
+1) move apt-get magic to compile stage
+1) Add ELB for frontend
 1) break out mongo, postgres to their own job
 2) MOve shared storage to persistent disk
 1) Package services as their own jobs - https://starkandwayne.com/blog/embed-docker-into-bosh-releases/

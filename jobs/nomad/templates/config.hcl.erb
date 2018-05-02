@@ -1,0 +1,17 @@
+log_level = "DEBUG"
+
+data_dir = "/var/vcap/data/nomad"
+datacenter = "<%= properties.availability_zone %>"
+
+advertise {
+    http = "<%= spec.networks.default.ip %>"
+    rpc = "<%= spec.networks.default.ip %>"
+    serf = "<%= spec.networks.default.ip %>"
+}
+
+client {
+    enabled = true
+    servers = ["<%= link("nomad_server").instances[0].address %>:4647"]
+    node_class = "linux-64bit"
+    options = {"driver.raw_exec.enable" = "1"}
+}
